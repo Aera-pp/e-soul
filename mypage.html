@@ -5,15 +5,13 @@
 
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
+<meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
 <title>E-SOUL 마이페이지</title>
 
-<link
-rel="stylesheet"
-href="css/style.css">
+<link rel="stylesheet"
+href="./css/style.css">
 
 </head>
 
@@ -31,36 +29,28 @@ href="css/style.css">
 
 <!-- 프로필 -->
 
-<div class="card">
+<div class="card profile-card">
 
-<img src="img/logo.png" class="logo"
-style="width: 200px;">
-<h2
-id="userName"
-style="
-text-align:center;
-margin-top:10px;
-">
+<img
+id="profileImg"
+src="img/happy.png"
+class="profile-logo">
+
+<h2 id="userName">
 
 사용자
 
 </h2>
 
-<p
-id="userEmail"
-style="
-text-align:center;
-color:#666;
-margin-top:5px;
-">
+<p id="userEmail">
 
-email@email.com
+email@example.com
 
 </p>
 
 </div>
 
-<!-- 현재 포인트 -->
+<!-- 포인트 -->
 
 <div class="card">
 
@@ -70,18 +60,11 @@ email@email.com
 
 </h3>
 
-<div
-id="point"
-style="
-font-size:32px;
-font-weight:bold;
-color:#FFC107;
-margin-top:10px;
-">
+<h2 id="userPoint">
 
 0P
 
-</div>
+</h2>
 
 </div>
 
@@ -95,17 +78,11 @@ margin-top:10px;
 
 </h3>
 
-<div
-id="level"
-style="
-font-size:28px;
-font-weight:bold;
-margin-top:10px;
-">
+<h2 id="userLevel">
 
 LV1 🥚
 
-</div>
+</h2>
 
 </div>
 
@@ -119,17 +96,11 @@ LV1 🥚
 
 </h3>
 
-<div
-id="streak"
-style="
-font-size:24px;
-font-weight:bold;
-margin-top:10px;
-">
+<h2 id="userStreak">
 
-1일
+🔥 1일
 
-</div>
+</h2>
 
 </div>
 
@@ -143,12 +114,7 @@ margin-top:10px;
 
 </h3>
 
-<ul
-style="
-margin-top:10px;
-padding-left:20px;
-line-height:2;
-">
+<ul style="margin-top:10px; line-height:2;">
 
 <li>첫 회원가입</li>
 
@@ -156,48 +122,19 @@ line-height:2;
 
 <li>첫 미션 완료</li>
 
-<li>포인트 100P 달성</li>
-
 </ul>
-
-</div>
-
-<!-- 앱 정보 -->
-
-<div class="card">
-
-<h3>
-
-📱 앱 정보
-
-</h3>
-
-<p
-style="
-margin-top:10px;
-line-height:1.8;
-">
-
-E-SOUL v1.0<br>
-
-에너지 절약 습관 형성 서비스
-
-</p>
 
 </div>
 
 <!-- 로그아웃 -->
 
-<button
-onclick="logout()">
+<button onclick="logout()">
 
 로그아웃
 
 </button>
 
 </div>
-
-<!-- 하단 메뉴 -->
 
 <nav class="bottom-nav">
 
@@ -266,7 +203,6 @@ location.href =
 
 }
 
-
 // 이름
 
 document.getElementById(
@@ -274,7 +210,6 @@ document.getElementById(
 ).innerText =
 
 currentUser.name;
-
 
 // 이메일
 
@@ -284,30 +219,13 @@ document.getElementById(
 
 currentUser.email;
 
-
 // 포인트
 
 document.getElementById(
-"point"
+"userPoint"
 ).innerText =
 
-currentUser.points
-+
-"P";
-
-
-// 연속 실천
-
-document.getElementById(
-"streak"
-).innerText =
-
-"🔥 "
-+
-currentUser.streak
-+
-"일";
-
+currentUser.points + "P";
 
 // 레벨
 
@@ -315,32 +233,81 @@ let level =
 
 "LV1 🥚";
 
-if(currentUser.points >=100){
+if(currentUser.points >= 100){
 
 level =
+
 "LV2 🌱";
 
 }
 
-if(currentUser.points >=300){
+if(currentUser.points >= 300){
 
 level =
+
 "LV3 😊";
 
 }
 
-if(currentUser.points >=600){
+if(currentUser.points >= 600){
 
 level =
+
 "LV4 ⭐";
 
 }
 
 document.getElementById(
-"level"
+"userLevel"
 ).innerText =
 level;
 
+// 연속 실천
+
+document.getElementById(
+"userStreak"
+).innerText =
+
+"🔥 " +
+(currentUser.streak || 1)
++ "일";
+
+// 캐릭터 상태
+
+const profileImg =
+
+document.getElementById(
+"profileImg"
+);
+
+const energy =
+
+currentUser.energy || 0;
+
+if(energy <= 3){
+
+profileImg.src =
+"img/happy.png";
+
+}
+else if(energy <= 5){
+
+profileImg.src =
+"img/wink.png";
+
+}
+else if(energy <= 7){
+
+profileImg.src =
+"img/tired.png";
+
+}
+else{
+
+profileImg.src =
+"img/sad.png";
+
+}
 
 // 로그아웃
 
@@ -351,11 +318,12 @@ localStorage.removeItem(
 );
 
 location.href =
-"login.html";
+"index.html";
 
 }
 
 </script>
 
 </body>
+
 </html>
