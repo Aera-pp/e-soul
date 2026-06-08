@@ -283,4 +283,26 @@ button:hover{
         max-width:100%;
     }
 
+   /* ======================
+마이페이지
+====================== */
+
+.profile-card{
+    text-align:center;
+}
+
+.profile-logo{
+    width:140px;
+    display:block;
+    margin:0 auto 20px;
+}
+
+.profile-card h2{
+    margin-bottom:8px;
+}
+
+.profile-card p{
+    color:#777;
+}
+   
 }
