@@ -1,12 +1,19 @@
 <!DOCTYPE html>
+
 <html lang="ko">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>E-SOUL 회원가입</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet"
+href="./css/style.css">
+
 </head>
 
 <body>
@@ -19,15 +26,22 @@
 
 </header>
 
-<div class="page">
+<div class="page login-page">
 
-<div class="card">
+<div class="card profile-card login-card">
 
-<img src="img/logo.png" class="logo"
+<img
+src="img/logo.png"
+class="profile-logo"
+alt="E-SOUL 로고">
 
-<h2 style="text-align:center;color:#FFC107;">
+<h2 class="app-title">
 E-SOUL
 </h2>
+
+<p class="sub-text">
+에너지 절약 습관 만들기 🌱
+</p>
 
 <input
 type="text"
@@ -50,9 +64,7 @@ id="passwordCheck"
 placeholder="비밀번호 확인">
 
 <button onclick="signup()">
-
 회원가입
-
 </button>
 
 <button
@@ -60,11 +72,9 @@ onclick="location.href='login.html'"
 style="
 background:#FFF8E1;
 color:#333;
+margin-top:10px;
 ">
-
-로그인 하러가기
-
-</button>
+로그인 하러가기 </button>
 
 </div>
 
@@ -76,105 +86,91 @@ color:#333;
 
 function signup(){
 
-    const name =
-    document.getElementById("name").value;
+const name =
+document.getElementById("name").value;
 
-    const email =
-    document.getElementById("email").value;
+const email =
+document.getElementById("email").value;
 
-    const password =
-    document.getElementById("password").value;
+const password =
+document.getElementById("password").value;
 
-    const passwordCheck =
-    document.getElementById("passwordCheck").value;
+const passwordCheck =
+document.getElementById("passwordCheck").value;
 
+if(
+name === "" ||
+email === "" ||
+password === ""
+){
 
-    if(
-        name === "" ||
-        email === "" ||
-        password === ""
-    ){
+alert(
+"모든 정보를 입력해주세요."
+);
 
-        alert(
-        "모든 정보를 입력해주세요."
-        );
+return;
 
-        return;
+}
 
-    }
+if(password !== passwordCheck){
 
+alert(
+"비밀번호가 일치하지 않습니다."
+);
 
-    if(password !== passwordCheck){
+return;
 
-        alert(
-        "비밀번호가 일치하지 않습니다."
-        );
+}
 
-        return;
+let users =
 
-    }
+JSON.parse(
+localStorage.getItem("users")
+) || [];
 
+const exists =
 
-    let users =
+users.find(
+user =>
+user.email === email
+);
 
-    JSON.parse(
-    localStorage.getItem("users")
-    ) || [];
+if(exists){
 
+alert(
+"이미 가입된 이메일입니다."
+);
 
-    const exists =
+return;
 
-    users.find(
-    user =>
-    user.email === email
-    );
+}
 
+const newUser = {
 
-    if(exists){
+name:name,
+email:email,
+password:password,
 
-        alert(
-        "이미 가입된 이메일입니다."
-        );
+points:0,
+energy:0,
+streak:1,
+level:1
 
-        return;
+};
 
-    }
+users.push(newUser);
 
+localStorage.setItem(
+"users",
+JSON.stringify(users)
+);
 
-    const newUser = {
+alert(
+"회원가입이 완료되었습니다!"
+);
 
-        name:name,
-        email:email,
-        password:password,
-
-        points:0,
-
-        energy:0,
-
-        streak:1,
-
-        level:1
-
-    };
-
-
-    users.push(newUser);
-
-    localStorage.setItem(
-
-        "users",
-
-        JSON.stringify(users)
-
-    );
-
-
-    alert(
-    "회원가입이 완료되었습니다!"
-    );
-
-    location.href =
-    "login.html";
+location.href =
+"login.html";
 
 }
 
