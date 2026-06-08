@@ -304,5 +304,15 @@ button:hover{
 .profile-card p{
     color:#777;
 }
-   
+   .profile-card{
+    text-align:center;
+}
+
+.profile-logo{
+    width:120px;
+    height:auto;
+    display:block;
+    margin:0 auto 20px;
+    object-fit:contain;
+}
 }
