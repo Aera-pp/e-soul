@@ -287,5 +287,87 @@ font-weight:bold;
     max-width:100%;
 }
 
+/* ======================
+시작 화면
+====================== */
+
+.start-container{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:30px;
+
+    background:white;
+
+}
+
+.start-container h2{
+
+    font-size:28px;
+
+    color:#333;
+
+    margin-top:20px;
+
+}
+
+.start-container p{
+
+    color:#777;
+
+    margin-top:10px;
+
+    margin-bottom:40px;
+
+}
+
+.start-buttons{
+
+    width:100%;
+
+    max-width:350px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.main-btn{
+
+    background:#FFC107;
+
+    color:white;
+
+    padding:16px;
+
+    border-radius:18px;
+
+    text-decoration:none;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+.main-btn:hover{
+
+    opacity:0.9;
+
+}
+
 
 }
