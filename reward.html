@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>E-SOUL 보상</title>
+
+<link
+rel="stylesheet"
+href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+🎁 보상
+
+</header>
+
+<div class="page">
+
+<!-- 현재 포인트 -->
+
+<div class="card">
+
+<h3>
+
+현재 포인트
+
+</h3>
+
+<div
+id="point"
+style="
+font-size:40px;
+font-weight:bold;
+color:#FFC107;
+margin-top:15px;
+">
+
+0P
+
+</div>
+
+</div>
+
+<!-- 캐릭터 성장 -->
+
+<div class="card">
+
+<h3>
+
+캐릭터 성장
+
+</h3>
+
+<div
+id="characterLevel"
+style="
+font-size:28px;
+font-weight:bold;
+text-align:center;
+margin-top:20px;
+">
+
+🥚 알
+
+</div>
+
+<p
+style="
+text-align:center;
+margin-top:10px;
+color:#666;
+">
+
+포인트를 모아 캐릭터를 성장시켜 보세요!
+
+</p>
+
+</div>
+
+<!-- 탄소나무 -->
+
+<div class="card">
+
+<h3>
+
+🌳 탄소나무
+
+</h3>
+
+<div
+id="tree"
+style="
+font-size:70px;
+text-align:center;
+margin-top:15px;
+">
+
+🌱
+
+</div>
+
+</div>
+
+<!-- 보상 목록 -->
+
+<div class="card">
+
+<h3>
+
+획득 가능한 보상
+
+</h3>
+
+<div class="reward-item">
+
+🎨 캐릭터 스킨
+(100P)
+
+</div>
+
+<div class="reward-item">
+
+🌱 희귀 씨앗
+(300P)
+
+</div>
+
+<div class="reward-item">
+
+⭐ 스페셜 배경
+(500P)
+
+</div>
+
+<div class="reward-item">
+
+👑 슈퍼 E-SOUL
+(1000P)
+
+</div>
+
+</div>
+
+<!-- 진행률 -->
+
+<div class="card">
+
+<h3>
+
+다음 레벨까지
+
+</h3>
+
+<div
+style="
+background:#eee;
+height:20px;
+border-radius:20px;
+overflow:hidden;
+margin-top:15px;
+">
+
+<div
+id="progress"
+style="
+height:100%;
+width:0%;
+background:#FFC107;
+">
+
+</div>
+
+</div>
+
+<p
+id="progressText"
+style="
+margin-top:10px;
+text-align:center;
+">
+
+0%
+
+</p>
+
+</div>
+
+</div>
+
+<nav class="bottom-nav">
+
+<a href="home.html">
+
+🏠<br>
+홈
+
+</a>
+
+<a href="record.html">
+
+⚡<br>
+기록
+
+</a>
+
+<a href="mission.html">
+
+🎯<br>
+미션
+
+</a>
+
+<a href="compare.html">
+
+📊<br>
+비교
+
+</a>
+
+<a href="reward.html"
+class="active">
+
+🎁<br>
+보상
+
+</a>
+
+<a href="mypage.html">
+
+👤<br>
+마이
+
+</a>
+
+</nav>
+
+</div>
+
+<script>
+
+const currentUser =
+
+JSON.parse(
+localStorage.getItem(
+"currentUser"
+)
+);
+
+if(!currentUser){
+
+location.href =
+"login.html";
+
+}
+
+
+// 현재 포인트
+
+const points =
+currentUser.points;
+
+document.getElementById(
+"point"
+).innerText =
+points + "P";
+
+
+// 캐릭터 성장
+
+let character = "🥚 알";
+
+if(points >=100){
+
+character = "🌱 새싹";
+
+}
+
+if(points >=300){
+
+character = "😊 E-SOUL";
+
+}
+
+if(points >=600){
+
+character = "⭐ 슈퍼 E-SOUL";
+
+}
+
+document.getElementById(
+"characterLevel"
+).innerText =
+character;
+
+
+// 탄소나무
+
+let tree = "🌱";
+
+if(points >=100){
+
+tree = "🌿";
+
+}
+
+if(points >=300){
+
+tree = "🌳";
+
+}
+
+document.getElementById(
+"tree"
+).innerText =
+tree;
+
+
+// 진행률
+
+let progress =
+
+Math.min(
+(points / 600) * 100,
+100
+);
+
+document.getElementById(
+"progress"
+).style.width =
+progress + "%";
+
+document.getElementById(
+"progressText"
+).innerText =
+
+progress.toFixed(0)
++
+"%";
+
+</script>
+
+</body>
+</html>

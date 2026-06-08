@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+<title>E-SOUL 홈</title>
+
+<link rel="stylesheet"
+      href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+    E-SOUL
+</header>
+
+<div class="page">
+
+    <!-- 환영 카드 -->
+
+    <div class="card welcome-card">
+
+        <h2 id="welcome">
+            안녕하세요 😊
+        </h2>
+
+        <p>
+            오늘도 에너지를 절약해 볼까요?
+        </p>
+
+    </div>
+
+    <!-- 캐릭터 카드 -->
+
+    <div class="card character-card">
+
+        <img
+        id="character"
+        src="img/happy.png"
+        class="mascot">
+
+        <h3 id="status">
+            😊 건강해요
+        </h3>
+
+    </div>
+
+    <!-- 사용량 + 포인트 -->
+
+    <div class="grid">
+
+        <div class="card small-card">
+
+            <p>
+                ⚡ 오늘 사용량
+            </p>
+
+            <h2 id="energy">
+                0 kWh
+            </h2>
+
+        </div>
+
+        <div class="card small-card">
+
+            <p>
+                🎁 포인트
+            </p>
+
+            <h2 id="points">
+                0P
+            </h2>
+
+        </div>
+
+    </div>
+
+    <!-- 연속 실천 -->
+
+    <div class="card">
+
+        <h3>
+            🔥 연속 실천
+        </h3>
+
+        <h2 id="streak">
+            1일
+        </h2>
+
+    </div>
+
+    <!-- 탄소나무 -->
+
+    <div class="card">
+
+        <h3>
+            🌳 탄소나무
+        </h3>
+
+        <div id="tree">
+            🌱
+        </div>
+
+    </div>
+
+    <!-- 오늘의 팁 -->
+
+    <div class="card tip-card">
+
+        <h3>
+            💡 오늘의 절약 팁
+        </h3>
+
+        <p id="tip">
+            멀티탭 전원을 꺼보세요!
+        </p>
+
+    </div>
+
+</div>
+
+<!-- 하단 메뉴 -->
+
+<nav class="bottom-nav">
+
+    <a href="home.html"
+       class="active">
+
+        🏠<br>
+        홈
+
+    </a>
+
+    <a href="record.html">
+
+        ⚡<br>
+        기록
+
+    </a>
+
+    <a href="mission.html">
+
+        🎯<br>
+        미션
+
+    </a>
+
+    <a href="compare.html">
+
+        📊<br>
+        비교
+
+    </a>
+
+    <a href="reward.html">
+
+        🎁<br>
+        보상
+
+    </a>
+
+    <a href="mypage.html">
+
+        👤<br>
+        마이
+
+    </a>
+
+</nav>
+```
+
+</div>
+
+<script>
+
+const currentUser =
+JSON.parse(
+localStorage.getItem("currentUser")
+);
+
+if(!currentUser){
+
+location.href = "login.html";
+
+}
+
+// 사용자 이름
+
+document.getElementById("welcome").innerText =
+(currentUser.name || "사용자") + "님 😊";
+
+// 사용량
+
+const energy =
+currentUser.energy || 0;
+
+document.getElementById("energy").innerText =
+energy + " kWh";
+
+// 포인트
+
+const points =
+currentUser.points || 0;
+
+document.getElementById("points").innerText =
+points + "P";
+
+// 연속 실천
+
+document.getElementById("streak").innerText =
+(currentUser.streak || 1) + "일";
+
+// =====================
+// 캐릭터 + 상태
+// =====================
+
+const character =
+document.getElementById("character");
+
+let status = "";
+
+if(energy <= 3){
+
+status = "😊 건강해요";
+character.src = "img/happy.png";
+
+}
+else if(energy <= 5){
+
+status = "😉 잘하고 있어요";
+character.src = "img/wink.png";
+
+}
+else if(energy <= 7){
+
+status = "😥 조금 피곤해요";
+character.src = "img/sad.png";
+
+}
+else{
+
+status = "😭 너무 지쳤어요";
+character.src = "img/tired.png";
+
+}
+
+document.getElementById("status").innerText =
+status;
+
+// =====================
+// 탄소나무
+// =====================
+
+let tree = "🌱";
+
+if(points >= 100){
+
+tree = "🌿";
+
+}
+
+if(points >= 300){
+
+tree = "🌳";
+
+}
+
+document.getElementById("tree").innerText =
+tree;
+
+// =====================
+// 오늘의 팁
+// =====================
+
+const tips = [
+
+"사용하지 않는 조명은 꺼주세요 💡",
+
+"멀티탭 전원을 차단해보세요 🔌",
+
+"에어컨은 26도를 추천해요 🌿",
+
+"자연광을 활용해보세요 ☀️",
+
+"세탁은 모아서 하면 좋아요 👕"
+
+];
+
+document.getElementById("tip").innerText =
+
+tips[
+Math.floor(
+Math.random() * tips.length
+)
+];
+
+
+</script>
+
+</body>
+</html>

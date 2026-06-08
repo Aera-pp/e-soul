@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>E-SOUL 비교</title>
+
+<link
+rel="stylesheet"
+href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+📊 에너지 비교
+
+</header>
+
+<div class="page">
+
+<!-- 내 사용량 -->
+
+<div class="card">
+
+<h3>
+
+나의 사용량
+
+</h3>
+
+<div
+id="myEnergy"
+style="
+font-size:36px;
+font-weight:bold;
+color:#FFC107;
+margin-top:10px;
+">
+
+0 kWh
+
+</div>
+
+</div>
+
+<!-- 또래 평균 -->
+
+<div class="card">
+
+<h3>
+
+20대 평균 사용량
+
+</h3>
+
+<div
+style="
+font-size:36px;
+font-weight:bold;
+color:#666;
+margin-top:10px;
+">
+
+4.1 kWh
+
+</div>
+
+</div>
+
+<!-- 비교 결과 -->
+
+<div class="card">
+
+<h3>
+
+비교 결과
+
+</h3>
+
+<div
+id="compareResult"
+style="
+font-size:22px;
+font-weight:bold;
+margin-top:15px;
+">
+
+분석 중...
+
+</div>
+
+</div>
+
+<!-- 그래프 -->
+
+<div class="card">
+
+<h3>
+
+사용량 비교
+
+</h3>
+
+<div
+style="
+margin-top:20px;
+">
+
+<p>나</p>
+
+<div
+style="
+height:25px;
+background:#FFC107;
+border-radius:10px;
+"
+id="myBar">
+
+</div>
+
+<br>
+
+<p>20대 평균</p>
+
+<div
+style="
+height:25px;
+background:#ddd;
+border-radius:10px;
+width:205px;
+">
+
+</div>
+
+</div>
+
+</div>
+
+<!-- 탄소 절감 -->
+
+<div class="card">
+
+<h3>
+
+탄소 절감 효과
+
+</h3>
+
+<p
+id="carbonResult"
+style="
+margin-top:15px;
+line-height:1.8;
+">
+
+분석 중...
+
+</p>
+
+</div>
+
+<!-- AI 코치 -->
+
+<div class="card">
+
+<h3>
+
+🤖 AI 절약 코치
+
+</h3>
+
+<p
+id="coach"
+style="
+margin-top:15px;
+line-height:1.8;
+">
+
+분석 중...
+
+</p>
+
+</div>
+
+</div>
+
+<!-- 하단 메뉴 -->
+
+<nav class="bottom-nav">
+
+<a href="home.html">
+
+🏠<br>
+홈
+
+</a>
+
+<a href="record.html">
+
+⚡<br>
+기록
+
+</a>
+
+<a href="mission.html">
+
+🎯<br>
+미션
+
+</a>
+
+<a
+href="compare.html"
+class="active">
+
+📊<br>
+비교
+
+</a>
+
+<a href="reward.html">
+
+🎁<br>
+보상
+
+</a>
+
+<a href="mypage.html">
+
+👤<br>
+마이
+
+</a>
+
+</nav>
+
+</div>
+
+<script>
+
+const currentUser =
+
+JSON.parse(
+localStorage.getItem(
+"currentUser"
+)
+);
+
+if(!currentUser){
+
+location.href =
+"login.html";
+
+}
+
+const myEnergy =
+Number(
+currentUser.energy
+);
+
+const average =
+4.1;
+
+
+// 내 사용량
+
+document.getElementById(
+"myEnergy"
+).innerText =
+myEnergy + " kWh";
+
+
+// 그래프
+
+document.getElementById(
+"myBar"
+).style.width =
+(myEnergy * 50) + "px";
+
+
+// 비교 결과
+
+let result = "";
+
+if(myEnergy < average){
+
+let percent =
+
+((average - myEnergy)
+/ average *100)
+.toFixed(0);
+
+result =
+
+"🎉 평균보다 "
++
+percent
++
+"% 적게 사용 중";
+
+}else{
+
+let percent =
+
+((myEnergy - average)
+/ average *100)
+.toFixed(0);
+
+result =
+
+"😥 평균보다 "
++
+percent
++
+"% 많이 사용 중";
+
+}
+
+document.getElementById(
+"compareResult"
+).innerText =
+result;
+
+
+// 탄소 절감
+
+const carbon =
+
+(average - myEnergy)
+* 0.4;
+
+if(carbon > 0){
+
+document.getElementById(
+"carbonResult"
+).innerHTML =
+
+"🌳 약 "
++
+carbon.toFixed(1)
++
+"kg CO₂ 절감 효과<br><br>🚗 자동차 운행 감소 효과";
+
+}else{
+
+document.getElementById(
+"carbonResult"
+).innerHTML =
+
+"⚠️ 평균보다 많은 에너지를 사용하고 있어요.";
+
+}
+
+
+// AI 코치
+
+let coach =
+
+"좋은 습관을 유지하고 있어요!";
+
+if(myEnergy > 3){
+
+coach =
+
+"조명 사용 시간을 줄여보세요 💡";
+
+}
+
+if(myEnergy > 5){
+
+coach =
+
+"에어컨 사용 시간을 줄여보세요 🌿";
+
+}
+
+if(myEnergy > 7){
+
+coach =
+
+"절전 모드 사용을 추천합니다 ⚡";
+
+}
+
+document.getElementById(
+"coach"
+).innerText =
+coach;
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>E-SOUL 마이페이지</title>
+
+<link
+rel="stylesheet"
+href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+👤 마이페이지
+
+</header>
+
+<div class="page">
+
+<!-- 프로필 -->
+
+<div class="card">
+
+<img src="img/logo.png" class="logo"
+style="width: 200px;">
+<h2
+id="userName"
+style="
+text-align:center;
+margin-top:10px;
+">
+
+사용자
+
+</h2>
+
+<p
+id="userEmail"
+style="
+text-align:center;
+color:#666;
+margin-top:5px;
+">
+
+email@email.com
+
+</p>
+
+</div>
+
+<!-- 현재 포인트 -->
+
+<div class="card">
+
+<h3>
+
+🎁 현재 포인트
+
+</h3>
+
+<div
+id="point"
+style="
+font-size:32px;
+font-weight:bold;
+color:#FFC107;
+margin-top:10px;
+">
+
+0P
+
+</div>
+
+</div>
+
+<!-- 레벨 -->
+
+<div class="card">
+
+<h3>
+
+⭐ 현재 레벨
+
+</h3>
+
+<div
+id="level"
+style="
+font-size:28px;
+font-weight:bold;
+margin-top:10px;
+">
+
+LV1 🥚
+
+</div>
+
+</div>
+
+<!-- 연속 실천 -->
+
+<div class="card">
+
+<h3>
+
+🔥 연속 실천
+
+</h3>
+
+<div
+id="streak"
+style="
+font-size:24px;
+font-weight:bold;
+margin-top:10px;
+">
+
+1일
+
+</div>
+
+</div>
+
+<!-- 업적 -->
+
+<div class="card">
+
+<h3>
+
+🏆 업적
+
+</h3>
+
+<ul
+style="
+margin-top:10px;
+padding-left:20px;
+line-height:2;
+">
+
+<li>첫 회원가입</li>
+
+<li>첫 에너지 기록</li>
+
+<li>첫 미션 완료</li>
+
+<li>포인트 100P 달성</li>
+
+</ul>
+
+</div>
+
+<!-- 앱 정보 -->
+
+<div class="card">
+
+<h3>
+
+📱 앱 정보
+
+</h3>
+
+<p
+style="
+margin-top:10px;
+line-height:1.8;
+">
+
+E-SOUL v1.0<br>
+
+에너지 절약 습관 형성 서비스
+
+</p>
+
+</div>
+
+<!-- 로그아웃 -->
+
+<button
+onclick="logout()">
+
+로그아웃
+
+</button>
+
+</div>
+
+<!-- 하단 메뉴 -->
+
+<nav class="bottom-nav">
+
+<a href="home.html">
+
+🏠<br>
+홈
+
+</a>
+
+<a href="record.html">
+
+⚡<br>
+기록
+
+</a>
+
+<a href="mission.html">
+
+🎯<br>
+미션
+
+</a>
+
+<a href="compare.html">
+
+📊<br>
+비교
+
+</a>
+
+<a href="reward.html">
+
+🎁<br>
+보상
+
+</a>
+
+<a
+href="mypage.html"
+class="active">
+
+👤<br>
+마이
+
+</a>
+
+</nav>
+
+</div>
+
+<script>
+
+const currentUser =
+
+JSON.parse(
+localStorage.getItem(
+"currentUser"
+)
+);
+
+if(!currentUser){
+
+location.href =
+"login.html";
+
+}
+
+
+// 이름
+
+document.getElementById(
+"userName"
+).innerText =
+
+currentUser.name;
+
+
+// 이메일
+
+document.getElementById(
+"userEmail"
+).innerText =
+
+currentUser.email;
+
+
+// 포인트
+
+document.getElementById(
+"point"
+).innerText =
+
+currentUser.points
++
+"P";
+
+
+// 연속 실천
+
+document.getElementById(
+"streak"
+).innerText =
+
+"🔥 "
++
+currentUser.streak
++
+"일";
+
+
+// 레벨
+
+let level =
+
+"LV1 🥚";
+
+if(currentUser.points >=100){
+
+level =
+"LV2 🌱";
+
+}
+
+if(currentUser.points >=300){
+
+level =
+"LV3 😊";
+
+}
+
+if(currentUser.points >=600){
+
+level =
+"LV4 ⭐";
+
+}
+
+document.getElementById(
+"level"
+).innerText =
+level;
+
+
+// 로그아웃
+
+function logout(){
+
+localStorage.removeItem(
+"currentUser"
+);
+
+location.href =
+"login.html";
+
+}
+
+</script>
+
+</body>
+</html>

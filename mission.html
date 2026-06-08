@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-SOUL 미션</title>
+
+```
+<link rel="stylesheet" href="css/style.css">
+```
+
+</head>
+
+<body>
+
+<div class="app">
+
+```
+<header>
+    🎯 오늘의 절전 미션
+</header>
+
+<div class="page">
+
+    <div class="card">
+
+        <h3>오늘의 미션</h3>
+
+        <div class="mission-item">
+            <input id="mission1" type="checkbox">
+            <label for="mission1">사용하지 않는 조명 끄기 💡</label>
+        </div>
+
+        <div class="mission-item">
+            <input id="mission2" type="checkbox">
+            <label for="mission2">멀티탭 전원 끄기 🔌</label>
+        </div>
+
+        <div class="mission-item">
+            <input id="mission3" type="checkbox">
+            <label for="mission3">세탁기 모아서 돌리기 👕</label>
+        </div>
+
+        <div class="mission-item">
+            <input id="mission4" type="checkbox">
+            <label for="mission4">냉장고 문 오래 열지 않기 ❄️</label>
+        </div>
+
+        <div class="mission-item">
+            <input id="mission5" type="checkbox">
+            <label for="mission5">자연광 활용하기 ☀️</label>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>오늘 획득 포인트</h3>
+
+        <div id="todayPoint" class="big-number">
+            0P
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>현재 레벨</h3>
+
+        <div id="level" class="big-number">
+            LV1 🥚
+        </div>
+
+    </div>
+
+</div>
+
+<nav class="bottom-nav">
+
+    <a href="home.html">
+        🏠<br>홈
+    </a>
+
+    <a href="record.html">
+        ⚡<br>기록
+    </a>
+
+    <a href="mission.html" class="active">
+        🎯<br>미션
+    </a>
+
+    <a href="compare.html">
+        📊<br>비교
+    </a>
+
+    <a href="reward.html">
+        🎁<br>보상
+    </a>
+
+    <a href="mypage.html">
+        👤<br>마이
+    </a>
+
+</nav>
+```
+
+</div>
+
+<script>
+
+// 로그인 확인
+
+const currentUser =
+JSON.parse(
+localStorage.getItem("currentUser")
+);
+
+if(!currentUser){
+
+    location.href = "login.html";
+
+}
+
+// 미션 데이터 생성
+
+if(!currentUser.missions){
+
+    currentUser.missions = {
+
+        mission1:false,
+        mission2:false,
+        mission3:false,
+        mission4:false,
+        mission5:false
+
+    };
+
+}
+
+// 체크박스 배열
+
+const missionIds = [
+
+    "mission1",
+    "mission2",
+    "mission3",
+    "mission4",
+    "mission5"
+
+];
+
+// 불러오기
+
+missionIds.forEach(id => {
+
+    const checkbox =
+    document.getElementById(id);
+
+    checkbox.checked =
+    currentUser.missions[id] || false;
+
+    checkbox.addEventListener(
+        "change",
+        saveMissions
+    );
+
+});
+
+updateUI();
+
+
+// 저장 함수
+
+function saveMissions(){
+
+    missionIds.forEach(id => {
+
+        currentUser.missions[id] =
+        document.getElementById(id).checked;
+
+    });
+
+    let checkedCount = 0;
+
+    missionIds.forEach(id => {
+
+        if(currentUser.missions[id]){
+
+            checkedCount++;
+
+        }
+
+    });
+
+    currentUser.points =
+    checkedCount * 20;
+
+    saveUser();
+
+    updateUI();
+
+}
+
+
+// UI 갱신
+
+function updateUI(){
+
+    let checkedCount = 0;
+
+    missionIds.forEach(id => {
+
+        if(currentUser.missions[id]){
+
+            checkedCount++;
+
+        }
+
+    });
+
+    const point =
+    checkedCount * 20;
+
+    document.getElementById(
+        "todayPoint"
+    ).innerText =
+    point + "P";
+
+
+    let level =
+    "LV1 🥚";
+
+    if(point >= 100){
+
+        level =
+        "LV2 🌱";
+
+    }
+
+    if(point >= 300){
+
+        level =
+        "LV3 😊";
+
+    }
+
+    if(point >= 600){
+
+        level =
+        "LV4 ⭐";
+
+    }
+
+    document.getElementById(
+        "level"
+    ).innerText =
+    level;
+
+}
+
+
+// 사용자 저장
+
+function saveUser(){
+
+    let users =
+
+    JSON.parse(
+    localStorage.getItem(
+    "users"
+    )
+    ) || [];
+
+
+    const index =
+
+    users.findIndex(
+
+    u =>
+
+    u.email ===
+    currentUser.email
+
+    );
+
+
+    if(index !== -1){
+
+        users[index] =
+        currentUser;
+
+    }
+
+
+    localStorage.setItem(
+
+    "users",
+
+    JSON.stringify(users)
+
+    );
+
+
+    localStorage.setItem(
+
+    "currentUser",
+
+    JSON.stringify(
+    currentUser
+    )
+
+    );
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>E-SOUL 회원가입</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+회원가입
+
+</header>
+
+<div class="page">
+
+<div class="card">
+
+<img src="img/logo.png" class="logo"
+
+<h2 style="text-align:center;color:#FFC107;">
+E-SOUL
+</h2>
+
+<input
+type="text"
+id="name"
+placeholder="이름">
+
+<input
+type="email"
+id="email"
+placeholder="이메일">
+
+<input
+type="password"
+id="password"
+placeholder="비밀번호">
+
+<input
+type="password"
+id="passwordCheck"
+placeholder="비밀번호 확인">
+
+<button onclick="signup()">
+
+회원가입
+
+</button>
+
+<button
+onclick="location.href='login.html'"
+style="
+background:#FFF8E1;
+color:#333;
+">
+
+로그인 하러가기
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function signup(){
+
+    const name =
+    document.getElementById("name").value;
+
+    const email =
+    document.getElementById("email").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    const passwordCheck =
+    document.getElementById("passwordCheck").value;
+
+
+    if(
+        name === "" ||
+        email === "" ||
+        password === ""
+    ){
+
+        alert(
+        "모든 정보를 입력해주세요."
+        );
+
+        return;
+
+    }
+
+
+    if(password !== passwordCheck){
+
+        alert(
+        "비밀번호가 일치하지 않습니다."
+        );
+
+        return;
+
+    }
+
+
+    let users =
+
+    JSON.parse(
+    localStorage.getItem("users")
+    ) || [];
+
+
+    const exists =
+
+    users.find(
+    user =>
+    user.email === email
+    );
+
+
+    if(exists){
+
+        alert(
+        "이미 가입된 이메일입니다."
+        );
+
+        return;
+
+    }
+
+
+    const newUser = {
+
+        name:name,
+        email:email,
+        password:password,
+
+        points:0,
+
+        energy:0,
+
+        streak:1,
+
+        level:1
+
+    };
+
+
+    users.push(newUser);
+
+    localStorage.setItem(
+
+        "users",
+
+        JSON.stringify(users)
+
+    );
+
+
+    alert(
+    "회원가입이 완료되었습니다!"
+    );
+
+    location.href =
+    "login.html";
+
+}
+
+</script>
+
+</body>
+</html>

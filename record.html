@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>E-SOUL 기록</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+⚡ 에너지 기록
+</header>
+
+<div class="page">
+
+<!-- 입력 카드 -->
+
+<div class="card">
+
+<h3>오늘 사용한 가전제품</h3>
+
+<label>에어컨 (시간)</label> <input type="number" id="air" min="0">
+
+<label>컴퓨터 (시간)</label> <input type="number" id="computer" min="0">
+
+<label>TV (시간)</label> <input type="number" id="tv" min="0">
+
+<label>조명 (시간)</label> <input type="number" id="light" min="0">
+
+<button onclick="calculateEnergy()">
+사용량 계산
+</button>
+
+</div>
+
+<!-- 결과 카드 -->
+
+<div class="card">
+
+<h3>⚡ 예상 사용량</h3>
+
+<div id="result"
+style="
+font-size:32px;
+font-weight:bold;
+color:#FFC107;
+margin-top:10px;">
+0 kWh
+</div>
+
+<hr style="margin:15px 0;">
+
+<h3>💰 예상 전기요금</h3>
+
+<div id="cost"
+style="
+font-size:24px;
+font-weight:bold;">
+0원
+</div>
+
+<hr style="margin:15px 0;">
+
+<h3>🌱 절약 가능 금액</h3>
+
+<div id="saveMoney"
+style="
+font-size:24px;
+font-weight:bold;
+color:#4CAF50;">
+0원 💰
+</div>
+
+<hr style="margin:15px 0;">
+
+<h3>📅 이번 달 예상 절약액</h3>
+
+<div id="monthSave"
+style="
+font-size:24px;
+font-weight:bold;
+color:#4CAF50;">
+0원 🌱
+</div>
+
+</div>
+
+<!-- 평가 카드 -->
+
+<div class="card">
+
+<h3>에너지 평가</h3>
+
+<p id="message"
+style="
+margin-top:10px;
+line-height:1.6;">
+기록을 입력해 주세요.
+</p>
+
+</div>
+
+</div>
+
+<!-- 하단 메뉴 -->
+
+<nav class="bottom-nav">
+
+<a href="home.html">
+🏠<br>홈
+</a>
+
+<a href="record.html"
+class="active">
+⚡<br>기록 </a>
+
+<a href="mission.html">
+🎯<br>미션
+</a>
+
+<a href="compare.html">
+📊<br>비교
+</a>
+
+<a href="reward.html">
+🎁<br>보상
+</a>
+
+<a href="mypage.html">
+👤<br>마이
+</a>
+
+</nav>
+
+</div>
+
+<script>
+
+// 로그인 확인
+
+let currentUser =
+JSON.parse(
+localStorage.getItem("currentUser")
+);
+
+if(!currentUser){
+
+location.href =
+"login.html";
+
+}
+
+// 저장값 불러오기
+
+window.onload = function(){
+
+document.getElementById("air").value =
+currentUser.air || 0;
+
+document.getElementById("computer").value =
+currentUser.computer || 0;
+
+document.getElementById("tv").value =
+currentUser.tv || 0;
+
+document.getElementById("light").value =
+currentUser.light || 0;
+
+if(currentUser.energy){
+
+document.getElementById("result").innerText =
+currentUser.energy + " kWh";
+
+updateMessage(
+currentUser.energy
+);
+
+}
+
+if(currentUser.cost){
+
+document.getElementById("cost").innerText =
+currentUser.cost.toLocaleString() + "원";
+
+}
+
+if(currentUser.saveMoney){
+
+document.getElementById("saveMoney").innerText =
+currentUser.saveMoney.toLocaleString() + "원 💰";
+
+}
+
+if(currentUser.monthSave){
+
+document.getElementById("monthSave").innerText =
+currentUser.monthSave.toLocaleString() + "원 🌱";
+
+}
+
+};
+
+// 사용량 계산
+
+function calculateEnergy(){
+
+const air =
+Number(document.getElementById("air").value);
+
+const computer =
+Number(document.getElementById("computer").value);
+
+const tv =
+Number(document.getElementById("tv").value);
+
+const light =
+Number(document.getElementById("light").value);
+
+// 사용량 계산
+
+const total =
+
+(air * 0.7) +
+
+(computer * 0.2) +
+
+(tv * 0.1) +
+
+(light * 0.05);
+
+const energy =
+Number(total.toFixed(1));
+
+// 예상 전기요금
+
+const cost =
+Math.round(energy * 150);
+
+// 절약 가능 금액
+
+const saveMoney =
+Math.max(
+0,
+Math.round((8 - energy) * 50)
+);
+
+// 월 예상 절약액
+
+const monthSave =
+saveMoney * 30;
+
+// 저장
+
+currentUser.air = air;
+currentUser.computer = computer;
+currentUser.tv = tv;
+currentUser.light = light;
+
+currentUser.energy = energy;
+currentUser.cost = cost;
+currentUser.saveMoney = saveMoney;
+currentUser.monthSave = monthSave;
+
+// 화면 출력
+
+document.getElementById("result").innerText =
+energy + " kWh";
+
+document.getElementById("cost").innerText =
+cost.toLocaleString() + "원";
+
+document.getElementById("saveMoney").innerText =
+saveMoney.toLocaleString() + "원 💰";
+
+document.getElementById("monthSave").innerText =
+monthSave.toLocaleString() + "원 🌱";
+
+// 평가
+
+updateMessage(energy);
+
+// 저장
+
+saveUser();
+
+alert("사용량이 저장되었습니다!");
+
+}
+
+// 평가
+
+function updateMessage(energy){
+
+let message =
+"😊 좋은 습관을 유지하고 있어요!";
+
+if(energy > 3){
+
+message =
+"🙂 평균 수준의 사용량이에요.";
+
+}
+
+if(energy > 5){
+
+message =
+"😥 조금 많이 사용했어요.";
+
+}
+
+if(energy > 7){
+
+message =
+"😭 절약이 필요해요!";
+
+}
+
+document.getElementById("message").innerText =
+message;
+
+}
+
+// localStorage 저장
+
+function saveUser(){
+
+let users =
+JSON.parse(
+localStorage.getItem("users")
+) || [];
+
+const index =
+users.findIndex(
+u => u.email === currentUser.email
+);
+
+if(index !== -1){
+
+users[index] =
+currentUser;
+
+}
+
+localStorage.setItem(
+"users",
+JSON.stringify(users)
+);
+
+localStorage.setItem(
+"currentUser",
+JSON.stringify(currentUser)
+);
+
+}
+
+</script>
+
+</body>
+</html>

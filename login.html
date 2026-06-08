@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>E-SOUL 로그인</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="page login-page">
+
+    <div class="card login-card">
+
+<img src="img/logo.png" class="logo">
+
+<h2 style="text-align:center;color:#FFC107;">
+E-SOUL
+</h2>
+
+<input
+type="email"
+id="email"
+placeholder="이메일">
+
+<input
+type="password"
+id="password"
+placeholder="비밀번호">
+
+<button onclick="login()">
+
+로그인
+
+</button>
+
+<button
+onclick="location.href='signup.html'"
+style="
+background:#FFF8E1;
+color:#333;
+">
+
+회원가입 하기
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function login(){
+
+    const email =
+    document.getElementById(
+    "email"
+    ).value;
+
+    const password =
+    document.getElementById(
+    "password"
+    ).value;
+
+    let users =
+
+    JSON.parse(
+    localStorage.getItem(
+    "users"
+    )
+    ) || [];
+
+    const user =
+
+    users.find(
+
+    u =>
+
+    u.email === email &&
+
+    u.password === password
+
+    );
+
+    if(!user){
+
+        alert(
+        "이메일 또는 비밀번호가 올바르지 않습니다."
+        );
+
+        return;
+
+    }
+
+    localStorage.setItem(
+
+    "currentUser",
+
+    JSON.stringify(user)
+
+    );
+
+    alert(
+    user.name + "님 환영합니다!"
+    );
+
+    location.href =
+    "home.html";
+
+}
+
+</script>
+
+</body>
+</html>
